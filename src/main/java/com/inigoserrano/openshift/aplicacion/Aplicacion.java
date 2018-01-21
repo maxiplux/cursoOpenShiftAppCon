@@ -62,7 +62,7 @@ public class Aplicacion extends HttpServlet {
 
     private Connection connectDatabase() throws ClassNotFoundException, SQLException {
         Class.forName("org.mariadb.jdbc.Driver");
-        return DriverManager.getConnection("jdbc:mysql://mimariadb:3306/sampledb", "userCL4", "NMNTOtPgVIa1OraX");
+        return DriverManager.getConnection("jdbc:mysql://mysql:3306/sampledb", "userCL4", "NMNTOtPgVIa1OraX");
     }
 
 }
