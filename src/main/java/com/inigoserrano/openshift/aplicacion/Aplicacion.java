@@ -62,10 +62,10 @@ public class Aplicacion extends HttpServlet {
 
     private Connection connectDatabase() throws ClassNotFoundException, SQLException {
         Class.forName("org.mariadb.jdbc.Driver");
-        String host = System.getProperty("MYSQL_HOST");
-        String baseDatos = System.getProperty("MYSQL_DB");
-        String usuario = System.getProperty("MYSQL_USER");
-        String contrasenia = System.getProperty("MYSQL_PASSWORD");
+        String host = System.getenv("MYSQL_HOST");
+        String baseDatos = System.getenv("MYSQL_DB");
+        String usuario = System.getenv("MYSQL_USER");
+        String contrasenia = System.getenv("MYSQL_PASSWORD");
         return DriverManager.getConnection("jdbc:mysql://"+host+":3306/"+baseDatos, usuario, contrasenia);
     }
 
