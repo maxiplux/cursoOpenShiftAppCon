@@ -24,9 +24,32 @@ public class Aplicacion extends HttpServlet {
 
 	@Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Salida GET");
-        response.getWriter().println("Salida GET"); 
-        response.getWriter().flush();
+        System.out.println("Salida GET con BD");
+        final PrintWriter writer = response.getWriter();
+        writer.println("Salida GET con BD");
+        try{
+            final Connection connection = this.connectDatabase();
+            final Statement stmt = connection.createStatement();
+            final ResultSet resultSet = stmt.executeQuery("SELECT * FROM Personas");
+            while(resultSet.next()){
+                writer.println("PersonaID: " + resultSet.getInt("PersonaID"));
+                writer.println("Nombre: " + resultSet.getString("Nombre"));
+                writer.println("Apellido1: " + resultSet.getString("Apellido1"));
+                writer.println("Apellido2: " + resultSet.getString("Apellido2"));
+                writer.println("Direccion: " + resultSet.getString("Direccion"));
+                writer.println("Poblacion: " + resultSet.getString("Poblacion"));
+                writer.println("-------------------------------------------------");
+            }
+            stmt.close();
+            connection.close();
+
+        }catch(final ClassNotFoundException e){
+            e.printStackTrace(writer);
+        }catch(final SQLException e){
+            e.printStackTrace(writer);
+        }
+
+        writer.flush();
     }
 
     @Override
@@ -35,6 +58,11 @@ public class Aplicacion extends HttpServlet {
         response.getWriter().println("Salida POST");
         response.getWriter().flush();
 
+    }
+
+    private Connection connectDatabase() throws ClassNotFoundException, SQLException {
+        Class.forName("org.mariadb.jdbc.Driver");
+        return DriverManager.getConnection("jdbc:mysql://mimariadb:3306/sampledb", "userCL4", "NMNTOtPgVIa1OraX");
     }
 
 }
