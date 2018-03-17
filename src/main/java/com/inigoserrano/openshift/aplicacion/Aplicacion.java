@@ -66,7 +66,7 @@ public class Aplicacion extends HttpServlet {
         String baseDatos = System.getenv("MYSQL_DB");
         String usuario = System.getenv("MYSQL_USER");
         String contrasenia = System.getenv("MYSQL_PASSWORD");
-        return DriverManager.getConnection("jdbc:mysql://"+host+":3306/"+baseDatos, usuario, contrasenia);
+        return DriverManager.getConnection("jdbc:mysql://"+host+":3306/"+baseDatos, usuario, contrasenia+"?passwordCharacterEncoding=ANSI_X3.4-1968");
     }
 
 }
